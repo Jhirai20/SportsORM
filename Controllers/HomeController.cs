@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SportsORM.Models;
 
+using Microsoft.EntityFrameworkCore;
 
 namespace SportsORM.Controllers
 {
@@ -53,6 +54,33 @@ namespace SportsORM.Controllers
         [HttpGet("level_2")]
         public IActionResult Level2()
         {
+            ViewBag.AllTeamAlanticSoccerConfrence=_context.Teams.Include(teams => teams.CurrLeague)
+            .Where(teams => teams.CurrLeague.Name
+            .Contains("Atlantic Soccer Conference")).ToList();
+
+            ViewBag.BostonPenguinePlayers=_context.Players.Include(players => players.CurrentTeam)
+            .Where(players=>players.CurrentTeam.TeamName=="Penguins"&&players.CurrentTeam.Location=="Boston").ToList();
+
+            ViewBag.ICBCPlayers=_context.Players.Include(players=>players.CurrentTeam)
+            .Where(players=>players.CurrentTeam.CurrLeague.Name== "International Collegiate Baseball Conference").ToList();
+
+            ViewBag.ACAFPlayers=_context.Players.Include(p=>p.CurrentTeam)
+            .Where(p=>p.CurrentTeam.CurrLeague.Name=="American Conference of Amateur Football" && p.LastName=="Davis").OrderBy(p=>p.LastName).ToList();
+
+            ViewBag.AllFPlayers=_context.Players.Include(p=>p.CurrentTeam)
+            .Where(p=>p.CurrentTeam.CurrLeague.Sport=="Football").ToList();
+
+            ViewBag.SophiaTeams=_context.Teams.Include(t=>t.CurrentPlayers).Where(t=>t.CurrentPlayers.Any(p=>p.FirstName=="Sophia")).ToList();
+
+            // var SophiaLeague=_context.Teams.Include(t=>t.CurrentPlayers).Where(p=>p.CurrentPlayers.Any(p=>p.FirstName=="Sophia")).ToList();
+            // ViewBag.SophiaLList=new List<String>();
+            // foreach (var item in SophiaLeague)
+            // {
+            //     ViewBag.SophiaLList.Add(item.CurrLeague.Name.ToString());
+            // };
+                //Don't know how to deal with null entries I tried if statments and toString convertions but it doesnt work.
+
+            ViewBag.AllFlores=_context.Players.Include(p =>p.CurrentTeam).Where(p =>p.CurrentTeam.TeamName != "Roughriders" && p.LastName =="Flores").ToList();
             return View();
         }
 
