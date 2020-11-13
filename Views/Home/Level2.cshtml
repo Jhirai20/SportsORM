@@ -93,18 +93,18 @@
                 </tr>
                 }
             </table>
-            <li>...all leagues with a (current) player named "Sophia"</li>
-            @* <table class="table table-striped col-5">
+            <li>...all Teams with a (current) player named "Sophia"</li>
+            <table class="table table-striped col-5">
                 <tr>
                     <th>League</th>
                 </tr>
                 @foreach (var item in ViewBag.SophiaLList)
                 {
                 <tr>
-                    <td>@item.CurrLeague.Name</td>
+                    <td>@item.TeamName</td>
                 </tr>
                 }
-            </table> *@
+            </table>
             <li>...everyone with the last name "Flores" who DOESN'T (currently) play for the Washington Roughriders</li>
             <table class="table table-striped col-5">
                 <tr>
